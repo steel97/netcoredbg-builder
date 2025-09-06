@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    branch:
+        required: true
+        default: 'master'
+
+jobs:
+  apple-darwin-aarch64:
+    name: apple darwin aarch64
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'samsung/netcoredbg'
+          ref: ${{ inputs.branch }} 
+      - name: Build
+        run: |
+          ls
+          mkdir build
+          cd build
+          CC=clang CXX=clang++ cmake .. -DDOTNET_DIR=/Users/runner/.dotnet
+          make
+          file src/netcoredbg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: netcoredbg-macos-arm64
+          path: |
+            build/src/netcoredbg
+            build/src/libdbgshim.dylib
+            build/src/ManagedPart.dll
+            build/src/Microsoft.CodeAnalysis.CSharp.Scripting.dll
+            build/src/Microsoft.CodeAnalysis.CSharp.dll
+            build/src/Microsoft.CodeAnalysis.Scripting.dll
+            build/src/Microsoft.CodeAnalysis.dll
