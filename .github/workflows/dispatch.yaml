@@ -30,11 +30,11 @@ jobs:
       # 1) artifact macos aarch64
       - uses: actions/download-artifact@v4
         with:
-          name: apple darwin aarch64
-          path: './apple darwin aarch64'
+          name: netcoredbg-macos-arm64
+          path: './netcoredbg-macos-arm64'
       - run: |
           rm -rf 'netcoredbg-macos-aarch64.zip'
-          zip -j -r 'netcoredbg-macos-aarch64.zip' './apple darwin aarch64'
+          zip -j -r 'netcoredbg-macos-aarch64.zip' './netcoredbg-macos-arm64'
       # upload release
       - uses: ncipollo/release-action@v1
         with:
