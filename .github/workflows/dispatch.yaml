@@ -12,9 +12,6 @@ on:
         type: boolean
         required: true
         default: true
-      tag:
-        description: 'Tag name (without "v" prefix, ex. 3.1.2-1054). important if release is true'
-        default: '1.0.0'
 
 jobs:
   build:
@@ -38,6 +35,14 @@ jobs:
       - run: |
           rm -rf 'netcoredbg-macos-aarch64.zip'
           zip -j -r 'netcoredbg-macos-aarch64.zip' './netcoredbg-macos-arm64'
+      # 2) artifact linux x86_64
+      - uses: actions/download-artifact@v4
+        with:
+          name: netcoredbg-linux-x86_64
+          path: './netcoredbg-linux-x86_64'
+      - run: |
+          rm -rf 'netcoredbg-linux-x86_64.zip'
+          zip -j -r 'netcoredbg-linux-x86_64.zip' './netcoredbg-linux-x86_64'
       # upload release
       - uses: ncipollo/release-action@v1
         with:

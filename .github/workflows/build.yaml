@@ -19,7 +19,6 @@ jobs:
           ref: ${{ inputs.branch }} 
       - name: Build
         run: |
-          ls
           mkdir build
           cd build
           CC=clang CXX=clang++ cmake .. -DDOTNET_DIR=/Users/runner/.dotnet
@@ -28,6 +27,32 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: netcoredbg-macos-arm64
+          path: |
+            build/src/netcoredbg
+            build/src/libdbgshim.dylib
+            build/src/ManagedPart.dll
+            build/src/Microsoft.CodeAnalysis.CSharp.Scripting.dll
+            build/src/Microsoft.CodeAnalysis.CSharp.dll
+            build/src/Microsoft.CodeAnalysis.Scripting.dll
+            build/src/Microsoft.CodeAnalysis.dll
+
+  linux-x86_64:
+    name: linux x86_64
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'samsung/netcoredbg'
+          ref: ${{ inputs.branch }} 
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          CC=clang CXX=clang++ cmake .. -DDOTNET_DIR=/home/runner/.dotnet
+          make
+      - uses: actions/upload-artifact@v4
+        with:
+          name: netcoredbg-linux-x86_64
           path: |
             build/src/netcoredbg
             build/src/libdbgshim.dylib
