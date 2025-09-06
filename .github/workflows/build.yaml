@@ -5,6 +5,7 @@ on:
     inputs:
       branch:
         required: true
+        type: string
         default: 'master'
 
 jobs:
