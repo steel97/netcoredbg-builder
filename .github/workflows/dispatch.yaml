@@ -41,8 +41,8 @@ jobs:
       # upload release
       - uses: ncipollo/release-action@v1
         with:
-          commit: 'master'
-          tag: 'v${{ inputs.tag }}'
+          commit: 'main'
+          tag: '${{ inputs.branch }}'
           allowUpdates: true
           artifactErrorsFailBuild: true
           generateReleaseNotes: true
