@@ -12,6 +12,9 @@ on:
         type: boolean
         required: true
         default: true
+      tag:
+        description: 'Tag name (without "v" prefix, ex. 3.1.2-1054). important if release is true'
+        default: '1.0.0'
 
 jobs:
   build:
