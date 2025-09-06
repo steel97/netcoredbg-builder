@@ -43,6 +43,14 @@ jobs:
       - run: |
           rm -rf 'netcoredbg-linux-x86_64.zip'
           zip -j -r 'netcoredbg-linux-x86_64.zip' './netcoredbg-linux-x86_64'
+      # 3) artifact windows x86_64
+      - uses: actions/download-artifact@v4
+        with:
+          name: netcoredbg-windows-x86_64
+          path: './netcoredbg-windows-x86_64'
+      - run: |
+          rm -rf 'netcoredbg-windows-x86_64.zip'
+          zip -j -r 'netcoredbg-windows-x86_64.zip' './netcoredbg-windows-x86_64'
       # upload release
       - uses: ncipollo/release-action@v1
         with:
