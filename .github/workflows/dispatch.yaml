@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Which branch of netcoredbg repo will be used? e.g 3.1.2-1054'
+        required: true
+        default: 'master'
+      release:
+        description: 'Should new release be created?'
+        type: boolean
+        required: true
+        default: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+    secrets: inherit
+    with:
+      branch: ${{ inputs.branch }}
+
+  create_release:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.release }} 
+    needs: build
+    permissions:
+      contents: write
+    steps:
+      # 1) artifact macos aarch64
+      - uses: actions/download-artifact@v4
+        with:
+          name: apple darwin aarch64
+          path: './apple darwin aarch64'
+      - run: |
+          rm -rf 'netcoredbg-macos-aarch64.zip'
+          zip -j -r 'netcoredbg-macos-aarch64.zip' './apple darwin aarch64'
+      # upload release
+      - uses: ncipollo/release-action@v1
+        with:
+          commit: 'master'
+          tag: '${{ inputs.branch }}'
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          draft: false
+          name: 'netcoredbg ${{ inputs.branch }}'
+          removeArtifacts: true
+          artifacts: '*.zip'
