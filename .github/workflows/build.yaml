@@ -86,10 +86,4 @@ jobs:
         with:
           name: netcoredbg-windows-x86_64
           path: |
-            build/src/netcoredbg.exe
-            build/src/libdbgshim.dylib
-            build/src/ManagedPart.dll
-            build/src/Microsoft.CodeAnalysis.CSharp.Scripting.dll
-            build/src/Microsoft.CodeAnalysis.CSharp.dll
-            build/src/Microsoft.CodeAnalysis.Scripting.dll
-            build/src/Microsoft.CodeAnalysis.dll
+            build
